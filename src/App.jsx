@@ -1,15 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "./components/Button";
 import { Input } from "./components/Input";
+import { Routes, Route, Link, useParams } from "react-router-dom";
 import styles from "./App.module.css";
 
 // const taskListURL = "https://jsonplaceholder.typicode.com/todos";
-
 //json-server --watch db.json
 // http://localhost:3000
 const taskListURL = "http://localhost:3000/tasks";
 
-function App() {
+// components
+const TaskLayout = () => {};
+
+const AppLayout = () => {
   const [taskList, setTaskList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
@@ -19,6 +22,7 @@ function App() {
   const [searchValue, setSearchValue] = useState("");
   const [isSorted, setIsSorted] = useState(false);
   const [isRefreshedTasks, setIsRefreshedTasks] = useState();
+
   let taskListBase = useRef();
 
   // utils
@@ -191,71 +195,80 @@ function App() {
       });
   }, [isRefreshedTasks]);
 
-  // return
+  return (
+    <div className={styles.container}>
+      <h1>Tasks</h1>
+
+      {isLoading && <div className={styles.loader}></div>}
+
+      {!isLoading && (
+        <>
+          <div className={styles.inputField}>
+            <Input
+              name="add"
+              placeholder="Add task"
+              onChange={onInputChange}
+              value={addValue}
+            />
+            <Button onClick={addTask} disabled={isAdding}>
+              Add
+            </Button>
+          </div>
+          <div className={styles.inputField}>
+            <Input
+              name="search"
+              placeholder="Search task"
+              onChange={onInputSearchChange}
+              value={searchValue}
+            />
+          </div>
+          <div className={styles.sortingBtnContainer}>
+            {!isSorted && (
+              <Button className={styles.sortingBtn} onClick={sortTasks}>
+                Sort ABC
+              </Button>
+            )}
+            {isSorted && (
+              <Button className={styles.sortingBtn} onClick={sortTasks}>
+                Sort Base
+              </Button>
+            )}
+          </div>
+          <ul className={styles.taskList}>
+            {taskList.map(({ id, title, completed }) => {
+              return (
+                <div className={styles.taskContainer} key={id} data-id={id}>
+                  <li
+                    className={`${styles.taskItem} ${completed ? styles.completedTaskItem : styles.unCompletedTaskItem}`}
+                  >
+                    <span>{title}</span>
+                  </li>
+                  <div className={styles.buttonsContainer}>
+                    <Button id={id} onClick={updateTask}>
+                      Update
+                    </Button>
+                    <Button id={id} onClick={removeTask}>
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+          </ul>
+        </>
+      )}
+    </div>
+  );
+};
+
+// FUNCTION APP
+function App() {
   return (
     <>
-      <div className={styles.container}>
-        <h1>Tasks</h1>
-
-        {isLoading && <div className={styles.loader}></div>}
-
-        {!isLoading && (
-          <>
-            <div className={styles.inputField}>
-              <Input
-                name="add"
-                placeholder="Add task"
-                onChange={onInputChange}
-                value={addValue}
-              />
-              <Button onClick={addTask} disabled={isAdding}>
-                Add
-              </Button>
-            </div>
-            <div className={styles.inputField}>
-              <Input
-                name="search"
-                placeholder="Search task"
-                onChange={onInputSearchChange}
-                value={searchValue}
-              />
-            </div>
-            <div className={styles.sortingBtnContainer}>
-              {!isSorted && (
-                <Button className={styles.sortingBtn} onClick={sortTasks}>
-                  Sort ABC
-                </Button>
-              )}
-              {isSorted && (
-                <Button className={styles.sortingBtn} onClick={sortTasks}>
-                  Sort Base
-                </Button>
-              )}
-            </div>
-            <ul className={styles.taskList}>
-              {taskList.map(({ id, title, completed }) => {
-                return (
-                  <div className={styles.taskContainer} key={id} data-id={id}>
-                    <li
-                      className={`${styles.taskItem} ${completed ? styles.completedTaskItem : styles.unCompletedTaskItem}`}
-                    >
-                      <span>{title}</span>
-                    </li>
-                    <div className={styles.buttonsContainer}>
-                      <Button id={id} onClick={updateTask}>
-                        Update
-                      </Button>
-                      <Button id={id} onClick={removeTask}>
-                        Delete
-                      </Button>
-                    </div>
-                  </div>
-                );
-              })}
-            </ul>
-          </>
-        )}
-      </div>
+      <Routes>
+        <Route path="/" element={<AppLayout />}></Route>
+        <Route path="/task/:id" element={<TaskLayout />}></Route>
+      </Routes>
     </>
   );
 }
