@@ -12,6 +12,17 @@ const taskListURL = "http://localhost:3000/tasks";
 // components
 const TaskLayout = () => {};
 
+const pageNotFound = () => {
+  return (
+    <>
+      <h3>Page does not exist</h3>
+      <div>
+        <img alt="page not found" src="./assets/404.svg"></img>
+      </div>
+    </>
+  );
+};
+
 const AppLayout = () => {
   const [taskList, setTaskList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +42,7 @@ const AppLayout = () => {
   }
 
   function getId(event) {
-    const taskContainer = event.target.closest(`.${styles.taskContainer}`);
+    const taskContainer = event.target.closest("li");
     const id = taskContainer.dataset.id;
     console.log("id", id);
     return id;
@@ -276,6 +287,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AppLayout />}></Route>
         <Route path="/task/:id" element={<TaskLayout />}></Route>
+        <Route path="*" element={<pageNotFound />}></Route>
       </Routes>
     </>
   );
