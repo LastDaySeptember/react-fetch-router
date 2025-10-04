@@ -31,19 +31,19 @@ const AppLayout = () => {
     setIsRefreshedTasks(!isRefreshedTasks);
   }
 
-  function getId(event) {
-    const taskContainer = event.target.closest("li");
-    const id = taskContainer.dataset.id;
-    console.log("id", id);
-    return id;
-  }
+  // function getId(event) {
+  //   const taskContainer = event.target.closest("li");
+  //   const id = taskContainer.dataset.id;
+  //   console.log("id", id);
+  //   return id;
+  // }
 
-  function getNewInput(event) {
-    const taskContainer = event.target.closest(`.${styles.taskContainer}`);
-    const initialValue = taskContainer.querySelector("span").textContent;
-    const userValue = prompt("Add updated input: ", initialValue);
-    return userValue;
-  }
+  // function getNewInput(event) {
+  //   const taskContainer = event.target.closest(`.${styles.taskContainer}`);
+  //   const initialValue = taskContainer.querySelector("span").textContent;
+  //   const userValue = prompt("Add updated input: ", initialValue);
+  //   return userValue;
+  // }
 
   // working with tasks
 
@@ -82,37 +82,37 @@ const AppLayout = () => {
   };
 
   // update task
-  const updateTask = (event) => {
-    setIsUpdating(true);
+  // const updateTask = (event) => {
+  //   setIsUpdating(true);
 
-    const userValue = getNewInput(event);
-    const id = getId(event);
-    const taskListURLToUpdate = taskListURL + "/" + id;
-    console.log("taskListURLToUpdate", taskListURLToUpdate);
+  //   const userValue = getNewInput(event);
+  //   const id = getId(event);
+  //   const taskListURLToUpdate = taskListURL + "/" + id;
+  //   console.log("taskListURLToUpdate", taskListURLToUpdate);
 
-    if (userValue === null) {
-      alert("Add valid task");
-      return false;
-    }
+  //   if (userValue === null) {
+  //     alert("Add valid task");
+  //     return false;
+  //   }
 
-    fetch(taskListURLToUpdate, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json;charset=utf-8" },
-      body: JSON.stringify({
-        title: userValue,
-        completed: false,
-      }),
-    })
-      .then((rawResponse) => rawResponse.json())
-      .then((resData) =>
-        console.log(`Updated ${userValue} on server with response: ${resData}`)
-      )
-      .catch((error) => console.log(error))
-      .finally(() => {
-        setIsUpdating(false);
-        refreshTasks();
-      });
-  };
+  //   fetch(taskListURLToUpdate, {
+  //     method: "PUT",
+  //     headers: { "Content-Type": "application/json;charset=utf-8" },
+  //     body: JSON.stringify({
+  //       title: userValue,
+  //       completed: false,
+  //     }),
+  //   })
+  //     .then((rawResponse) => rawResponse.json())
+  //     .then((resData) =>
+  //       console.log(`Updated ${userValue} on server with response: ${resData}`)
+  //     )
+  //     .catch((error) => console.log(error))
+  //     .finally(() => {
+  //       setIsUpdating(false);
+  //       refreshTasks();
+  //     });
+  // };
 
   // SORTINTG
   function sortingTasks(taskArray) {
@@ -158,24 +158,24 @@ const AppLayout = () => {
   };
 
   // REMOVE
-  const removeTask = (event) => {
-    setIsRemoving(true);
-    const id = getId(event);
-    const taskListURLToDelete = taskListURL + "/" + id;
+  // const removeTask = (event) => {
+  //   setIsRemoving(true);
+  //   const id = getId(event);
+  //   const taskListURLToDelete = taskListURL + "/" + id;
 
-    fetch(taskListURLToDelete, {
-      method: "DELETE",
-    })
-      .then((rawResponse) => rawResponse.json())
-      .then((resData) =>
-        console.log(`Removed ${id} on server with response: ${resData}`)
-      )
-      .catch((error) => console.log(error))
-      .finally(() => {
-        setIsRemoving(false);
-        refreshTasks();
-      });
-  };
+  //   fetch(taskListURLToDelete, {
+  //     method: "DELETE",
+  //   })
+  //     .then((rawResponse) => rawResponse.json())
+  //     .then((resData) =>
+  //       console.log(`Removed ${id} on server with response: ${resData}`)
+  //     )
+  //     .catch((error) => console.log(error))
+  //     .finally(() => {
+  //       setIsRemoving(false);
+  //       refreshTasks();
+  //     });
+  // };
   //
   // fetch data
   useEffect(() => {
@@ -254,12 +254,12 @@ const AppLayout = () => {
                     </Link>
 
                     <div className={styles.buttonsContainer}>
-                      <Button id={id} onClick={updateTask}>
+                      {/* <Button id={id} onClick={updateTask}>
                         Update
                       </Button>
                       <Button id={id} onClick={removeTask}>
                         Delete
-                      </Button>
+                      </Button> */}
                     </div>
                   </div>
                 </li>
