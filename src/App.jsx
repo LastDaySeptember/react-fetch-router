@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "./components/Button";
 import { Input } from "./components/Input";
-import { Routes, Route, Link, useParams } from "react-router-dom";
+import { TaskLayout } from "./components/TaskLayout";
+import { PageNotFound } from "./components/PageNotFound";
+import { Routes, Route, Link, useParams, Navigate } from "react-router-dom";
 import styles from "./App.module.css";
 
 // const taskListURL = "https://jsonplaceholder.typicode.com/todos";
@@ -10,18 +12,6 @@ import styles from "./App.module.css";
 const taskListURL = "http://localhost:3000/tasks";
 
 // components
-const TaskLayout = () => {};
-
-const pageNotFound = () => {
-  return (
-    <>
-      <h3>Page does not exist</h3>
-      <div>
-        <img alt="page not found" src="./assets/404.svg"></img>
-      </div>
-    </>
-  );
-};
 
 const AppLayout = () => {
   const [taskList, setTaskList] = useState([]);
@@ -257,9 +247,11 @@ const AppLayout = () => {
                         : styles.unCompletedTaskItem
                     }`}
                   >
-                    <div className={styles.taskItem}>
-                      <span>{title}</span>
-                    </div>
+                    <Link to={`/task/${id}`} className={styles.taskItem}>
+                      <div>
+                        <span>{title}</span>
+                      </div>
+                    </Link>
 
                     <div className={styles.buttonsContainer}>
                       <Button id={id} onClick={updateTask}>
@@ -287,7 +279,8 @@ function App() {
       <Routes>
         <Route path="/" element={<AppLayout />}></Route>
         <Route path="/task/:id" element={<TaskLayout />}></Route>
-        <Route path="*" element={<pageNotFound />}></Route>
+        <Route path="/404" element={<PageNotFound />}></Route>
+        <Route path="*" element={<Navigate to="/404" />}></Route>
       </Routes>
     </>
   );

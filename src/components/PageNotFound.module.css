@@ -1,0 +1,13 @@
+img {
+  max-width: 500px;
+}
+
+.backButton {
+  width: 100%;
+  text-wrap: nowrap;
+}
+
+.headline {
+  border: 1ps solid red;
+  margin-top: 4rem;
+}

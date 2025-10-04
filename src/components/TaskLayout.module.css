@@ -1,0 +1,33 @@
+.backButton {
+  width: 100%;
+  text-wrap: nowrap;
+}
+
+.headline {
+  border: 1ps solid red;
+  margin-block: 4rem;
+}
+
+.container {
+  max-width: 1440px;
+}
+
+.titleText {
+  padding: 1rem;
+}
+
+.completeTask {
+}
+
+.incompleteTask {
+}
+
+.loader {
+  margin: 10rem auto;
+  border-radius: 50%;
+  border: 5px solid grey;
+  border-bottom: 5px solid rgba(139, 255, 139, 0);
+  width: 200px;
+  height: 200px;
+  animation: rotateLoader 0.5s linear infinite;
+}
