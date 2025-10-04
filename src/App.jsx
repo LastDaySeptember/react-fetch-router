@@ -59,6 +59,7 @@ const AppLayout = () => {
       return false;
     }
     setIsAdding(true);
+
     fetch(taskListURL, {
       method: "POST",
       headers: { "Content-Type": "application/json;charset=utf-8" },
@@ -237,21 +238,28 @@ const AppLayout = () => {
           <ul className={styles.taskList}>
             {taskList.map(({ id, title, completed }) => {
               return (
-                <div className={styles.taskContainer} key={id} data-id={id}>
-                  <li
-                    className={`${styles.taskItem} ${completed ? styles.completedTaskItem : styles.unCompletedTaskItem}`}
+                <li key={id} data-id={id}>
+                  <div
+                    className={`${styles.taskContainer} ${
+                      completed
+                        ? styles.completedTaskItem
+                        : styles.unCompletedTaskItem
+                    }`}
                   >
-                    <span>{title}</span>
-                  </li>
-                  <div className={styles.buttonsContainer}>
-                    <Button id={id} onClick={updateTask}>
-                      Update
-                    </Button>
-                    <Button id={id} onClick={removeTask}>
-                      Delete
-                    </Button>
+                    <div className={styles.taskItem}>
+                      <span>{title}</span>
+                    </div>
+
+                    <div className={styles.buttonsContainer}>
+                      <Button id={id} onClick={updateTask}>
+                        Update
+                      </Button>
+                      <Button id={id} onClick={removeTask}>
+                        Delete
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                </li>
               );
             })}
           </ul>

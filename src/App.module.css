@@ -27,49 +27,77 @@ h1 {
 
 ul {
   /* border: 1px solid blue; */
-  list-style: decimal;
-  list-style-position: inside;
+  /* list-style: decimal;
+  list-style-position: inside; */
+
+  list-style: none;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin: 0;
   margin-top: 2rem;
   padding: 0;
+  counter-reset: tasksList;
 }
 
 li {
+}
+
+.taskItem {
+  /* border: 1px solid rgb(0, 13, 128); */
+  vertical-align: center;
   text-align: start;
   padding: 1rem 1.5rem;
   background-color: rgba(240, 248, 255, 0.112);
   border-radius: 0.5rem;
   transition: all 0.2s ease-in-out;
   outline: 2px solid rgba(255, 255, 255, 0);
+  /* control overflow */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-li:hover {
+.taskItem:hover {
   background-color: rgba(240, 248, 255, 0.251);
 }
 
-li.completedTaskItem:hover {
+.taskItem.completedTaskItem:hover {
   outline: 2px solid rgba(139, 255, 139, 0.671);
 }
 
-li.unCompletedTaskItem:hover {
+.taskItem.unCompletedTaskItem:hover {
   outline: 2px solid rgba(255, 80, 80, 0.708);
+}
+
+span {
+  counter-increment: tasksList;
+}
+span::before {
+  content: counter(tasksList) ". ";
+}
+
+.taskContainer {
+  display: flex;
+  border: 1px solid green;
+  flex-direction: row;
+  /* flex: 1; */
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 1rem;
+  flex: 1 1;
+  justify-content: flex-end;
+  border: 1px solid rgb(128, 0, 124);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.taskContainer {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  justify-content: space-between;
-  gap: 1rem;
 }
 
 .inputField {
@@ -87,13 +115,6 @@ li.unCompletedTaskItem:hover {
   button {
     /*module*/
   }
-}
-
-.buttonsContainer {
-  display: flex;
-  gap: 1rem;
-  flex: 1 1;
-  justify-content: flex-end;
 }
 
 .sortingBtnContainer {
